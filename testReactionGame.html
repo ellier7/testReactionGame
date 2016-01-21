@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Reaction Game</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div>
+  <h1 id="title">Test Your Reactions!</h1>
+</div>
+<p>Click on the boxes and circles as quickly as you can!</p>
+<p class="bold">Your time: <span id="time">0</span>s</p>
+<div id="box"></div>
+<p>&nbsp;</p>
+</body>
+</html>
+<script type="text/javascript">
+
+function getRandomColor() {
+	var letters = '0123456789ABCDEF'.split('');
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+	color += letters[Math.round(Math.random() * 15)];
+	}
+	return color;
+}
+
+//make box disappear and reapper after random time
+//when user clicks, box disappears
+//then reappears again until user clicks again
+
+var clickedTime; 
+var createdTime; 
+var reactionTime;
+
+function makeBox() {
+	var time=Math.random();
+	time=time*5000;
+	setTimeout(function() {
+		if (Math.random()>0.5) {
+		document.getElementById("box").style.borderRadius="100px";
+		} 	
+		else {
+		document.getElementById("box").style.borderRadius="0";
+		}
+	var top=Math.random();
+	top=top*300;
+	var left=Math.random();
+	left=left*500;
+	document.getElementById("box").style.top=top+"px";
+	document.getElementById("box").style.left=left+"px";
+	document.getElementById("box").style.backgroundColor=getRandomColor();
+	document.getElementById("box").style.display="block";
+	createdTime=Date.now();
+	}, time);
+}
+document.getElementById("box").onclick=function() {
+clickedTime=Date.now();
+reactionTime=(clickedTime-createdTime)/1000;
+document.getElementById("time").innerHTML=reactionTime;
+this.style.display="none";
+makeBox();
+}
+makeBox();
+
+</script>
